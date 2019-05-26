@@ -32,6 +32,7 @@ public:
 		cout<<"마지막 변경시간 : "<<last<<endl<<endl;
 	}
 	virtual void autoCtl(int *rgst, int value){
+		GPIO_CDM |=1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
 		cout<<"잉크(endl), 종이(0~100)"<<endl;
 		cout<<"프린터 유지보수 담당자에게 요구할 잉크의 양을 입력하세요 : ";
 		cin >>ink;
@@ -54,6 +55,7 @@ public:
 		cout<<"마지막 변경시간 : "<<last<<"%"<<endl<<endl;
 	}
 	virtual void autoCtl(int *rgst, int value){
+		GPIO_CDM |=1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
 		cout<<"온도(18~40), 운전방식(0:송풍 1:냉방 2:난방)"<<endl;
 		cout<<"온도를 입력하세요 : ";
 		cin >>temper;
@@ -70,6 +72,7 @@ public:
 
 //	int *Register[4] = {&GPIO_CDM, &is_open, &is_error, &last};
 	virtual void status(){
+		GPIO_CDM |=1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
 		cout<<"clock, degital_enable, mode : "<<bitset<3>(GPIO_CDM)<<endl;
 		cout<<"개폐여부(0:닫힘 1:열림) : "<<is_open<<"%"<<endl;
 		cout<<"기능이상(0:이상무 1:이상) : "<<is_error<<"%"<<endl;
