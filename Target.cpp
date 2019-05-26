@@ -13,8 +13,8 @@ protected:
 		int value; //기기들의 내부 요소에 들어갈 수치다.
 
 	manCtl(int *rgst, int value){*rgst = this->value; }
-	virtual void autoCtl();
-	virtual void status();
+	virtual void autoCtl() = 0;
+	virtual void status() = 0;
 };
 
 
@@ -31,7 +31,7 @@ public:
 		cout<<"종이 : "<<paper<<"%"<<endl;
 		cout<<"마지막 변경시간 : "<<last<<endl<<endl;
 	}
-	virtual void autoCtl(int *rgst, int value){
+	virtual void autoCtl(){
 		GPIO_CDM |=1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
 		cout<<"잉크(endl), 종이(0~100)"<<endl;
 		cout<<"프린터 유지보수 담당자에게 요구할 잉크의 양을 입력하세요 : ";
@@ -54,7 +54,7 @@ public:
 		cout<<"운전방식(0:송풍 1:냉방 2:난방) : "<<operate<<"%"<<endl;
 		cout<<"마지막 변경시간 : "<<last<<"%"<<endl<<endl;
 	}
-	virtual void autoCtl(int *rgst, int value){
+	virtual void autoCtl(){
 		GPIO_CDM |=1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
 		cout<<"온도(18~40), 운전방식(0:송풍 1:냉방 2:난방)"<<endl;
 		cout<<"온도를 입력하세요 : ";
@@ -78,7 +78,7 @@ public:
 		cout<<"기능이상(0:이상무 1:이상) : "<<is_error<<"%"<<endl;
 		cout<<"마지막 변경시간 : "<<last<<endl<<endl;
 	}
-	virtual void autoCtl(int *rgst, int value){
+	virtual void autoCtl(){
 		cout<<"개폐방식(0:닫힘 1:열림)"<<endl;
 		cout<<"개폐방식을 입력하세요 : ";
 		cin >>is_open;
