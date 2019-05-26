@@ -47,7 +47,7 @@ public:
 	int operate;
 	int last;
 
-//	int *Register[4] = {&GPIO_CDM, &temper, &operate, &last};
+	int *Register[4] = {&GPIO_CDM, &temper, &operate, &last};
 	virtual void status(){
 		cout<<"clock, degital_enable, mode : "<<bitset<3>(GPIO_CDM)<<endl;
 		cout<<"온도 : "<<temper<<"%"<<endl;
@@ -70,7 +70,7 @@ public:
     int is_error;
 	int last;
 
-//	int *Register[4] = {&GPIO_CDM, &is_open, &is_error, &last};
+	int *Register[4] = {&GPIO_CDM, &is_open, &is_error, &last};
 	virtual void status(){
 		GPIO_CDM |=1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
 		cout<<"clock, degital_enable, mode : "<<bitset<3>(GPIO_CDM)<<endl;
