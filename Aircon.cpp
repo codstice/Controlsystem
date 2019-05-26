@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class air_con{ // 초기화는 파일입출력을 통해 받도록 한다.
+class Aircon{ // 초기화는 파일입출력을 통해 받도록 한다.
 	int temper;
 	int operate;
 	int last;
