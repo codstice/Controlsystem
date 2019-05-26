@@ -14,13 +14,13 @@ int main()
 	std::string line;
 
 	string log_GPIO_CDM[3];
-	vector <vector < float > > log_CDM_reg;
+	vector <vector < unsigned int > > log_CDM_reg;
 	string log_CDM_time[3][2];
 
 	if (csv.is_open()) {
 		int row = 3; //배열의 인덱스를 세기위한 변수
 		int col = 5;
-		log_CDM_reg.assign(row, vector<float>(col, 1));
+		log_CDM_reg.assign(row, vector<unsigned int>(col, 1));
 
 		int i = 0; //i는 각종 장치들. 0번:printer 1번:aircon 2번:door. 
 		for (std::string row_line; std::getline(csv, row_line);)
@@ -49,7 +49,7 @@ int main()
 					cout << "레지스터" << i << "의 최근 수정 시간 : " << log_CDM_time[i][j - 4] + " " + log_CDM_time[i][j-3] << endl; //확인용
 				}
 				else {
-					log_CDM_reg[i][j] = stof(column.c_str());
+					log_CDM_reg[i][j] = stoi(column.c_str());
 					cout << stof(column.c_str()) << endl; //확인용
 				}
 				j++;
