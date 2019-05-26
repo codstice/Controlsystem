@@ -2,6 +2,7 @@
 using namespace std;
 
 class printer : public Target_model{ // 초기화는 파일입출력을 통해 받도록 한다.
+public:
 	/* 상속대상 */
 	int ink; 
 	int paper;
