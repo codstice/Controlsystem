@@ -10,9 +10,9 @@ protected:
 		bool mode;	//타겟에 대한 자동제어(1) 수동제어(0)
 	*/
 		//int *Register[4] ={&GPIO_CDM, NULL, NULL, NULL}; //기기들의 내부 요소들의 주소를 나타낸다. ex) 프린터의 경우 {CDM, 잉크, 종이, 시간} 이다.
-		int data; //기기들의 내부 요소에 들어갈 수치다.
+		int value; //기기들의 내부 요소에 들어갈 수치다.
 
-	manCtl(int *rgst, int value){*rgst = value; }
+	manCtl(int *rgst, int value){*rgst = this->value; }
 	virtual void autoCtl();
 	virtual void status();
 };
