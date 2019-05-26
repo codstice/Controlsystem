@@ -40,7 +40,7 @@ public:
 	}
 };
 
-class Aircon{ // 초기화는 파일입출력을 통해 받도록 한다.
+class Aircon : public Target_model{ // 초기화는 파일입출력을 통해 받도록 한다.
 public:
 	int temper;
 	int operate;
@@ -62,7 +62,7 @@ public:
 	}
 };
 
-class Door{ // 초기화는 파일입출력을 통해 받도록 한다.
+class Door : public Target_model{ // 초기화는 파일입출력을 통해 받도록 한다.
 public:
 	int is_open;
     int is_error;
