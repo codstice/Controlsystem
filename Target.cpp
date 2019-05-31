@@ -1,7 +1,8 @@
 #include<iostream>
 #include<bitset>
 #include <ctime>
-#include "timestamp.h"
+//#include "time.cpp"
+//#include "timestamp.h"
 using namespace std;
 
 class Target_model{
