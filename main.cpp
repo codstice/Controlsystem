@@ -12,6 +12,7 @@ using namespace std;
 void read_csv_log(Printer *ptr0, Aircon *ptr1, Door *ptr2);
 void upLinePrompt(int count);
 void showConsole(Printer *printer1, Aircon *aircon1, Door *door1);
+void menu(Printer *printer1, Aircon *aircon1, Door *door1);
 
 int main() {
 	Printer printer1;
@@ -25,118 +26,17 @@ int main() {
 	aircon1.GPIO_CDM = 2; //test용  
 	door1.GPIO_CDM = 7; //test용  
 
+
 	while (true) {
 		showConsole(&printer1, &aircon1, &door1);
-
-		int num = 7;
-		string Selectmenu;
-		int Selectnum;
-		cin >> Selectmenu;
-		cout << " " << endl;
-		if (!Selectmenu.compare("프린터")) {
-			cout << "1.전원 켜기/끄기\t\t2.잉크/종이 넣기 요청\t\t3.잉크 종이 잔량 확인" << endl;
-			cout << "[>] ";
-			cin.ignore(); //cin의 버퍼를 비움
-			cin >> Selectnum;
-			cout << " " << endl;
-			if (Selectnum == 1) {
-				if (*(printer1.Register[0]) == 1)
-				{
-					cout << "프린터를 끄는중.";
-					for (int i = 0; i < 3; i++) {
-						for (int j = 0; j < 5; j++) {
-							cout << ".";
-							_sleep(1000);
-						}
-						cout << "\b\b\b\b\b"; //테스트중
-					}
-					cout << endl;
-					cout << "꺼짐" << endl;
-					//*(printer1->Register[0]).flip(2); // 왜안되냐 ㅅㅂ 프린터 전원 off
-					//printer1.GPIO_CDM == 0; // 프린터 전원 off
-					//프린터 꺼진부분 체크해주는 로직 넣어야함.(Register[0]의 맨앞비트만반전)
-				}
-				else {
-					cout << "프린터를 키는중.";
-					for (int i = 0; i < 3; i++) {
-						//cout << "\b\b\b\b\b";
-						for (int j = 0; j < 5; j++) {
-							cout << ".";
-							_sleep(1000);
-						}
-						cout << "\b\b\b\b\b"; //테스트중
-					}
-					cout << endl;
-					cout << "꺼짐" << endl;
-					//printer1.GPIO_CDM == 1; // 프린터 전원 on
-					//프린터 켜진부분 체크해주는 로직 넣어야함.(Register[0]의 맨앞비트만반전)
-				}
-			}
-			else if (Selectnum == 2) {
-				printer1.autoCtl();
-			}
-			else if (Selectnum == 3) {
-				printer1.status();
-			}
-			//void upLinePrompt(int count)
-		}
-		else if (!Selectmenu.compare("에어컨")) {
-			cout << "1.전원 켜기/끄기\t\t2.희망온도 설정\t\t3.현재 가동상태 확인" << endl;
-			cout << "[>] ";
-			cin.ignore(); //cin의 버퍼를 비움
-			cin >> Selectnum;
-			cout << " " << endl;
-			if (Selectnum == 1) {
-
-			}
-			else if (Selectnum == 2) {
-				aircon1.autoCtl();
-			}
-			else if (Selectnum == 3) {
-				aircon1.status();
-			}
-			//void upLinePrompt(int count)
-		}
-		else if (!Selectmenu.compare("문")) {
-			cout << "1.전원 켜기/끄기\t\t2.개문/폐문 설정하기\t\t3.현재 개폐여부 확인" << endl;
-			cout << "[>] ";
-			cin.ignore(); //cin의 버퍼를 비움
-			cin >> Selectnum;
-			cout << " " << endl;
-			if (Selectnum == 1) {
-
-			}
-			else if (Selectnum == 2) {
-				printer1.autoCtl();
-			}
-			else if (Selectnum == 3) {
-				printer1.status();
-			}
-			//void upLinePrompt(int count)
-		}
-		else {
-			cout << " " << endl;
-			cout << "finding .." << endl;
-			_sleep(2000);
-			cout << "연결된 장치가 없습니다" << endl;
-		}
-		//showConsole end 
-
-
-		//examples. 이 부분은 cin으로 select_CMD 변수로 받아서 저장한다.
-		//IF selecyCDM & 4 , printer1.GPIO_CDM |= 4
-		//printer1.GPIO_CDM = 7;       
-		//printer1.manCtl(&printer1.GPIO_CDM, 1);
-
-		//printer1.status(); 
-		//printer1.autoCtl();
-		_sleep(2000);
+		menu(&printer1, &aircon1, &door1);
+		_sleep(4000);
 		system("cls");
 	}
 	
 }
 
-// 콘솔 특정부분만 지워버림 (재출력할 필요가 없게됨) https://blog.dork94.com/31
+// 콘솔 특정부분만 지워버림 (재출력할 필요가 없게됨) 사용하게 되면 필요함 https://blog.dork94.com/31
 void upLinePrompt(int count)
 {
 	for (int i = 0; i < count; ++i) {
@@ -263,6 +163,131 @@ void showConsole(Printer *printer1, Aircon *aircon1, Door *door1) {
 	cout << "[>] ";
 }
 
+void menu(Printer *printer1, Aircon *aircon1, Door *door1) {
+	int num = 7;
+	string Selectmenu;
+	int Selectnum;
+	cin >> Selectmenu;
+	cout << " " << endl;
+	if (!Selectmenu.compare("프린터")) {
+		cout << "1.전원 켜기/끄기\t\t2.잉크/종이 넣기 요청\t\t3.잉크 종이 잔량 확인" << endl;
+		cout << "[>] ";
+		cin.ignore(); //cin의 버퍼를 비움
+		cin >> Selectnum;
+		cout << " " << endl;
+		if (Selectnum == 1) {
+			if (*(printer1->Register[0]) == 1)
+			{
+				cout << "프린터를 끄는중.";
+				for (int i = 0; i < 2; i++) {
+					for (int j = 0; j < 5; j++) {
+						cout << ".";
+						_sleep(1000);
+					}
+					cout << "\b\b\b\b\b";
+					cout << "     ";
+					cout << "\b\b\b\b\b";
+				}
+				cout << endl;
+				*(printer1->Register[0]) ^= 0x1 << 2; //3번째 비트(전원비트)만 반전
+				cout << "프린터가 꺼졌습니다." << endl;
+
+			}
+			else {
+				cout << "프린터를 키는중";
+				for (int i = 0; i < 2; i++) {
+					//cout << "\b\b\b\b\b";
+					for (int j = 0; j < 5; j++) {
+						cout << ".";
+						_sleep(1000);
+					}
+					cout << "\b\b\b\b\b";
+					cout << "     ";
+					cout << "\b\b\b\b\b";
+				}
+				cout << endl;
+				*(printer1->Register[0]) ^= 0x1 << 2; //3번째 비트(전원비트)만 반전
+				cout << "프린터가 켜졌습니다." << endl;
+			}
+		}
+		else if (Selectnum == 2) {
+			printer1->autoCtl();
+		}
+		else if (Selectnum == 3) {
+			printer1->status();
+		}
+		//void upLinePrompt(int count)
+	}
+	else if (!Selectmenu.compare("에어컨")) {
+		cout << "1.전원 켜기/끄기\t\t2.희망온도 설정\t\t3.현재 가동상태 확인" << endl;
+		cout << "[>] ";
+		cin.ignore(); //cin의 버퍼를 비움
+		cin >> Selectnum;
+		cout << " " << endl;
+		if (Selectnum == 1) {
+			if (*(aircon1->Register[0]) == 1)
+			{
+				cout << "에어컨을 끄는중.";
+				for (int i = 0; i < 2; i++) {
+					for (int j = 0; j < 5; j++) {
+						cout << ".";
+						_sleep(1000);
+					}
+					cout << "\b\b\b\b\b";
+					cout << "     ";
+					cout << "\b\b\b\b\b";
+				}
+				cout << endl;
+				*(aircon1->Register[0]) ^= 0x1 << 2; //3번째 비트(전원비트)만 반전
+				cout << "에어컨이 꺼졌습니다." << endl;
+
+			}
+			else {
+				cout << "에어컨을 키는중";
+				for (int i = 0; i < 2; i++) {
+					//cout << "\b\b\b\b\b";
+					for (int j = 0; j < 5; j++) {
+						cout << ".";
+						_sleep(1000);
+					}
+					cout << "\b\b\b\b\b";
+					cout << "     ";
+					cout << "\b\b\b\b\b";
+				}
+				cout << endl;
+				*(aircon1->Register[0]) ^= 0x1 << 2; //3번째 비트(전원비트)만 반전
+				cout << "에어컨이 켜졌습니다." << endl;
+			}
+		}
+		else if (Selectnum == 2) {
+			aircon1->autoCtl();
+		}
+		else if (Selectnum == 3) {
+			aircon1->status();
+		}
+		//void upLinePrompt(int count)
+	}
+	else if (!Selectmenu.compare("문")) {
+		cout << "1.개문/폐문 설정하기\t\t2.현재 개폐여부 확인" << endl;
+		cout << "[>] ";
+		cin.ignore(); //cin의 버퍼를 비움
+		cin >> Selectnum;
+		cout << " " << endl;
+		if (Selectnum == 1) {
+			printer1->autoCtl();
+		}
+		else if (Selectnum == 2) {
+			printer1->status();
+		}
+		//void upLinePrompt(int count)
+	}
+	else {
+		cout << " " << endl;
+		cout << "finding .." << endl;
+		_sleep(2000);
+		cout << "ERROR:연결된 장치가 없습니다" << endl;
+	}
+}
 
 
 // readlog file 
