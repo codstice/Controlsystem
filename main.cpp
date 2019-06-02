@@ -21,9 +21,9 @@ int main() {
 	cout << "Start Central Control System Program..." << endl;
 	_sleep(1000);
 	read_csv_log(&printer1, &aircon1, &door1);
-	printer1.GPIO_CDM = 6; //test 
-	aircon1.GPIO_CDM = 2; //test
-	door1.GPIO_CDM = 7; //test
+	printer1.GPIO_CDM = 3; //test용      
+	aircon1.GPIO_CDM = 2; //test용  
+	door1.GPIO_CDM = 7; //test용  
 
 
 
@@ -38,27 +38,33 @@ int main() {
 	cout << " │" << endl;
 	cout << " └─────────────────── 프린터    ";
 
-	if ((*(printer1.Register[0]) & 1)) //자동모드 
+	if ((*(printer1.Register[0]) & 4)) //자동모드 
 	{
 		if ((*(printer1.Register[0]) == 7)) { //전원O 권한 O (0b111)
 			cout << "■     ■     ■" << endl;
 		}
-		else if ((*(printer1.Register[0]) == 3)) { //전원O 권한 x (0b101)
+		else if ((*(printer1.Register[0]) == 6)) { //전원O 권한 x (0b110)
 			cout << "■     ■     □" << endl;
 		}
-		else if ((*(printer1.Register[0]) == 1)) { //전원x 권한 x (0b001)
+		else if ((*(printer1.Register[0]) == 5)) { //전원x 권한 O (0b101)
+			cout << "■     □     ■" << endl;
+		}
+		else if ((*(printer1.Register[0]) == 4)) { //전원x 권한 x (0b100)
 			cout << "■     □     □" << endl;
 		}
 	}
-	else if (!(*(printer1.Register[0]) & 1)) //수동모드
+	else if (!(*(printer1.Register[0]) & 4)) //수동모드
 	{
-		if ((*(printer1.Register[0]) == 6)) { //전원O 권한 O
+		if ((*(printer1.Register[0]) == 3)) { //전원O 권한 O (0b011)
 			cout << "□     ■     ■" << endl;
 		}
-		else if ((*(printer1.Register[0]) == 4)) { //전원O 권한 x
+		else if ((*(printer1.Register[0]) == 2)) { //전원O 권한 x (0b010)
 			cout << "□     ■     □" << endl;
 		}
-		else if ((*(printer1.Register[0]) == 0)) { //전원x 권한 x
+		else if ((*(printer1.Register[0]) == 1)) { //전원x 권한 O (0b001)
+			cout << "□     □     ■" << endl;
+		}
+		else if ((*(printer1.Register[0]) == 0)) { //전원x 권한 x (0b000)
 			cout << "□     □     □" << endl;
 		}
 	}
@@ -66,57 +72,69 @@ int main() {
 	cout << " │" << endl;
 	cout << " └─────────────────── 에어콘    ";
 
-	if ((*(aircon1.Register[0]) & 1)) //자동모드 
+	if ((*(aircon1.Register[0]) & 4)) //자동모드 
 	{
 		if ((*(aircon1.Register[0]) == 7)) { //전원O 권한 O (0b111)
 			cout << "■     ■     ■" << endl;
 		}
-		else if ((*(aircon1.Register[0]) == 3)) { //전원O 권한 x (0b101)
+		else if ((*(aircon1.Register[0]) == 6)) { //전원O 권한 x (0b110)
 			cout << "■     ■     □" << endl;
 		}
-		else if ((*(aircon1.Register[0]) == 1)) { //전원x 권한 x (0b001)
+		else if ((*(aircon1.Register[0]) == 5)) { //전원x 권한 O (0b101)
+			cout << "■     □     ■" << endl;
+		}
+		else if ((*(aircon1.Register[0]) == 4)) { //전원x 권한 x (0b100)
 			cout << "■     □     □" << endl;
 		}
 	}
-	else if ((*(aircon1.Register[0]) & 0)) //수동모드
+	else if (!(*(aircon1.Register[0]) & 4)) //수동모드
 	{
-		if ((*(aircon1.Register[0]) == 6)) { //전원O 권한 O
+		if ((*(aircon1.Register[0]) == 3)) { //전원O 권한 O (0b011)
 			cout << "□     ■     ■" << endl;
 		}
-		else if ((*(aircon1.Register[0]) == 4)) { //전원O 권한 x
+		else if ((*(aircon1.Register[0]) == 2)) { //전원O 권한 x (0b010)
 			cout << "□     ■     □" << endl;
 		}
-		else if ((*(aircon1.Register[0]) == 0)) { //전원x 권한 x
+		else if ((*(aircon1.Register[0]) == 1)) { //전원x 권한 O (0b001)
+			cout << "□     □     ■" << endl;
+		}
+		else if ((*(aircon1.Register[0]) == 0)) { //전원x 권한 x (0b000)
 			cout << "□     □     □" << endl;
 		}
 	}
 
 	cout << " │" << endl;
 	cout << " │" << endl;
-	cout << " └─────────────────── 문       ";
+	cout << " └─────────────────── 문        ";
 
-	if ((*(door1.Register[0]) & 1)) //자동모드 
+	if ((*(door1.Register[0]) & 4)) //자동모드 
 	{
 		if ((*(door1.Register[0]) == 7)) { //전원O 권한 O (0b111)
-			cout << " ■     ■     ■" << endl;
+			cout << "■     ■     ■" << endl;
 		}
-		else if ((*(door1.Register[0]) == 3)) { //전원O 권한 x (0b101)
-			cout << " ■     ■     □" << endl;
+		else if ((*(door1.Register[0]) == 6)) { //전원O 권한 x (0b110)
+			cout << "■     ■     □" << endl;
 		}
-		else if ((*(door1.Register[0]) == 1)) { //전원x 권한 x (0b001)
-			cout << " ■     □     □" << endl;
+		else if ((*(door1.Register[0]) == 5)) { //전원x 권한 O (0b101)
+			cout << "■     □     ■" << endl;
+		}
+		else if ((*(door1.Register[0]) == 4)) { //전원x 권한 x (0b100)
+			cout << "■     □     □" << endl;
 		}
 	}
-	else if ((*(door1.Register[0]) & 0)) //수동모드
+	else if (!(*(door1.Register[0]) & 4)) //수동모드
 	{
-		if ((*(door1.Register[0]) == 6)) { //전원O 권한 O
-			cout << " □     ■     ■" << endl;
+		if ((*(door1.Register[0]) == 3)) { //전원O 권한 O (0b011)
+			cout << "□     ■     ■" << endl;
 		}
-		else if ((*(door1.Register[0]) == 4)) { //전원O 권한 x
-			cout << " □     ■     □" << endl;
+		else if ((*(door1.Register[0]) == 2)) { //전원O 권한 x (0b010)
+			cout << "□     ■     □" << endl;
 		}
-		else if ((*(door1.Register[0]) == 0)) { //전원x 권한 x
-			cout << " □     □     □" << endl;
+		else if ((*(door1.Register[0]) == 1)) { //전원x 권한 O (0b001)
+			cout << "□     □     ■" << endl;
+		}
+		else if ((*(door1.Register[0]) == 0)) { //전원x 권한 x (0b000)
+			cout << "□     □     □" << endl;
 		}
 	}
 
@@ -124,7 +142,9 @@ int main() {
 	cout << "[*] CLI" << endl;
 	cout << "[>] ";
 	
-	//showConsole();
+	//showConsole end 
+
+
 	//examples. 이 부분은 cin으로 select_CMD 변수로 받아서 저장한다.
 	//IF selecyCDM & 4 , printer1.GPIO_CDM |= 4
 	//printer1.GPIO_CDM = 7;       
@@ -135,6 +155,30 @@ int main() {
 	_sleep(2000);
 }
 
+void showConsole() {
+	int automode = 1; //자동모드
+	int onoff = 1; //전원
+	int digital_enable = 0; //권한
+	cout << "                             자동모드  전원  권한" << endl;
+	cout << "┌───────────────────┐" << endl;
+	cout << "│                   │" << endl;
+	cout << "│    중 앙  제 어   │" << endl;
+	cout << "│                   │" << endl;
+	cout << "└───────────────────┘" << endl;
+	cout << " │" << endl;
+	cout << " │" << endl;
+	cout << " └─────────────────── 프린터 ";
+
+	cout << " │" << endl;
+	cout << " │" << endl;
+	cout << " └─────────────────── 에어콘 ";
+	cout << " │" << endl;
+	cout << " │" << endl;
+	cout << " └─────────────────── 문 ";
+	cout << "======================================" << endl;
+	cout << "[*] CLI" << endl;
+	cout << "[>] ";
+}
 
 
 // readlog file 
