@@ -21,9 +21,9 @@ int main() {
 	cout << "Start Central Control System Program..." << endl;
 	_sleep(1000);
 	read_csv_log(&printer1, &aircon1, &door1);
-	printer1.GPIO_CDM = 7; //7말고 다른값 넣으면 안됨 왠지 모르겠음 (해결해야함)      
-	aircon1.GPIO_CDM = 7; //7말고 다른값 넣으면 안됨 왠지 모르겠음  (해결해야함)
-	door1.GPIO_CDM = 7; //7말고 다른값 넣으면 안됨 왠지 모르겠음  (해결해야함)
+	printer1.GPIO_CDM = 6; //test 
+	aircon1.GPIO_CDM = 2; //test
+	door1.GPIO_CDM = 7; //test
 
 
 
