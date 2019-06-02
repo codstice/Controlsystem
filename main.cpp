@@ -213,10 +213,10 @@ void menu(Printer *printer1, Aircon *aircon1, Door *door1) {
 		cin >> Selectnum;
 		cout << " " << endl;
 		if (Selectnum == 1) {
-			printer1->autoCtl();
+			door1->autoCtl();
 		}
 		else if (Selectnum == 2) {
-			printer1->status();
+			door1->status();
 		}
 		//void upLinePrompt(int count)
 	}
@@ -287,25 +287,22 @@ void read_csv_log(Printer *ptr0, Aircon *ptr1, Door *ptr2) { // 실행과 동시
 	else {
 		cout << "Unable to open file";
 	}
-
-
 	//nogada
 	//csv파일로 부터 읽은 정보를 클래스이 레지스터에 저장하는 코드
 	*(ptr0->Register[0]) = stoi(log_GPIO_CDM[0]);
-	*(ptr0->Register[1]) = log_CDM_reg[0][0];
-	*(ptr0->Register[2]) = log_CDM_reg[0][1];
+	*(ptr0->Register[1]) = log_CDM_reg[0][1];
+	*(ptr0->Register[2]) = log_CDM_reg[0][2];
 	*(ptr0->Register[3]) = stoi(log_CDM_time[0][0]);
 
 	*(ptr1->Register[0]) = stoi(log_GPIO_CDM[1]);
-	*(ptr1->Register[1]) = log_CDM_reg[1][0];
-	*(ptr1->Register[2]) = log_CDM_reg[1][1];
+	*(ptr1->Register[1]) = log_CDM_reg[1][1];
+	*(ptr1->Register[2]) = log_CDM_reg[1][2];
 	*(ptr1->Register[3]) = stoi(log_CDM_time[1][0]);
 
 	*(ptr2->Register[0]) = stoi(log_GPIO_CDM[2]);
-	*(ptr2->Register[1]) = log_CDM_reg[2][0];
-	*(ptr2->Register[2]) = log_CDM_reg[2][1];
+	*(ptr2->Register[1]) = log_CDM_reg[2][1];
+	*(ptr2->Register[2]) = log_CDM_reg[2][2];
 	*(ptr2->Register[3]) = stoi(log_CDM_time[2][0]);
-
 }
 void showdata() {
 	/***showing. if i=0 : printer , i=1 : aircon , i=2 : door***/
