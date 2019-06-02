@@ -37,6 +37,7 @@ int main() {
 	}
 	
 }
+
 // 콘솔 특정부분만 지워버림 (재출력할 필요가 없게됨) 사용하게 되면 필요함 https://blog.dork94.com/31
 void upLinePrompt(int count)
 {
@@ -205,7 +206,7 @@ void menu(Printer *printer1, Aircon *aircon1, Door *door1) {
 		}
 		//void upLinePrompt(int count)
 	}
-	else if (!Selectmenu.compare("문")) {
+	else if (!Selectmenu.compare("출입문")) {
 		cout << "1.개문/폐문 설정하기\t\t2.현재 개폐여부 확인" << endl;
 		cout << "[>] ";
 		cin.ignore(); //cin의 버퍼를 비움
