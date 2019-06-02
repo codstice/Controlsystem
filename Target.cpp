@@ -12,8 +12,8 @@ public:
 	*/
 	int value; //기기들의 내부 요소에 들어갈 수치다.
 	int manCtl(int *rgst, int v) { *rgst = v; GPIO_CDM |= 1; }
-	virtual int autoCtl() = 0;
-	virtual int status() = 0;
+	virtual void autoCtl() = 0;
+	virtual void status() = 0;
 };
 
 
@@ -25,21 +25,21 @@ public:
 	int last;
 
 	int *Register[4] = { &GPIO_CDM, &ink, &paper, &last };
-	virtual int status() {
+	virtual void status() {
 		cout << "clock, degital_enable, mode : 0b" << bitset<3>(*Register[0]) << endl;
 		cout << "잉크 : " << *Register[1] << "%" << endl;
 		cout << "종이 : " << *Register[2] << "%" << endl;
 		time_t last_to_time = *Register[3];
 		cout << "마지막 변경시간 : " << ctime(&last_to_time) << endl << endl;
 	}
-	virtual int autoCtl() {
+	virtual void autoCtl() {
 		if (!(*Register[0] & 4))
 		{
-			cout << "전원이 안들어와 있습니다.";return 0;
+			cout << "전원이 안들어와 있습니다."; return;
 		}
 		if (!(*Register[0] & 2))
 		{
-			cout << "타겟 제어장치에서 타겟 회로로의 비트 입력권한이 없습니다.";return 0;
+			cout << "타겟 제어장치에서 타겟 회로로의 비트 입력권한이 없습니다."; return;
 		}
 		GPIO_CDM |= 1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
 		cout << "잉크(0~100%), 종이(0~100%)" << endl;
@@ -58,21 +58,21 @@ public:
 	int last;
 
 	int *Register[4] = { &GPIO_CDM, &temper, &operate, &last };
-	virtual int status() {
+	virtual void status() {
 		cout << "clock, degital_enable, mode : 0b" << bitset<3>(*Register[0]) << endl;
 		cout << "온도 : " << *Register[1] << "＇" << endl;
 		cout << "운전방식(0:송풍 1:냉방 2:난방) : " << *Register[2] << endl;
 		time_t last_to_time = *Register[3];
 		cout << "마지막 변경시간 : " << ctime(&last_to_time) << endl << endl;
 	}
-	virtual int autoCtl() {
+	virtual void autoCtl() {
 		if (!(*Register[0] & 4))
 		{
-			cout << "전원이 안들어와 있습니다.";return 0;
+			cout << "전원이 안들어와 있습니다."; return;
 		}
 		if (!(*Register[0] & 2))
 		{
-			cout << "타겟 제어장치에서 타겟 회로로의 비트 입력권한이 없습니다.";return 0;
+			cout << "타겟 제어장치에서 타겟 회로로의 비트 입력권한이 없습니다."; return;
 		}
 		GPIO_CDM |= 1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
 		cout << "온도(18~40), 운전방식(0:송풍 1:냉방 2:난방)" << endl;
@@ -93,7 +93,7 @@ public:
 	int last;
 
 	int *Register[4] = { &GPIO_CDM, &is_open, &is_error, &last };
-	virtual int status() {
+	virtual void status() {
 		GPIO_CDM |= 1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
 		cout << "clock, degital_enable, mode : 0b" << bitset<3>(*Register[0]) << endl;
 		cout << "개폐여부(0:닫힘 1:열림) : " << *Register[1] << endl;
@@ -101,14 +101,14 @@ public:
 		time_t last_to_time = *Register[3];
 		cout << "마지막 변경시간 : " << ctime(&last_to_time) << endl << endl;
 	}
-	virtual int autoCtl() {
+	virtual void autoCtl() {
 		if (!(*Register[0] & 4))
 		{
-			cout << "전원이 안들어와 있습니다.";return 0;
+			cout << "전원이 안들어와 있습니다."; return;
 		}
 		if (!(*Register[0] & 2))
 		{
-			cout << "타겟 제어장치에서 타겟 회로로의 비트 입력권한이 없습니다.";return 0;
+			cout << "타겟 제어장치에서 타겟 회로로의 비트 입력권한이 없습니다."; return;
 		}
 		cout << "개폐방식(0:닫힘 1:열림)" << endl;
 		cout << "개폐방식을 입력하세요 : ";
