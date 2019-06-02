@@ -100,13 +100,13 @@ public:
 
    int *Register[4] = { &GPIO_CDM, &is_open, &is_error, &last };
    virtual void status() {
-      if (((getHour() == 23 && getMinute() >= 30) || 5 > getHour()) && *Register[1] == 1) {
+      if (5 > getHour() && *Register[1] == 1) {
          *Register[2] = 1;
       }
       else {
          *Register[2] = 0;
       }
-      if (!((getHour() == 23 && getMinute() >= 30) || 5 > getHour()) && *Register[1] == 0) {
+      if (!(5 > getHour()) && *Register[1] == 0) {
          *Register[2] = 1;
       }
       else {
