@@ -135,30 +135,6 @@ int main() {
 	_sleep(2000);
 }
 
-void showConsole() {
-	int automode = 1; //자동모드
-	int onoff = 1; //전원
-	int digital_enable = 0; //권한
-	cout << "                             자동모드  전원  권한" << endl;
-	cout << "┌───────────────────┐" << endl;
-	cout << "│                   │" << endl;
-	cout << "│    중 앙  제 어   │" << endl;
-	cout << "│                   │" << endl;
-	cout << "└───────────────────┘" << endl;
-	cout << " │" << endl;
-	cout << " │" << endl;
-	cout << " └─────────────────── 프린터 ";
-
-	cout << " │" << endl;
-	cout << " │" << endl;
-	cout << " └─────────────────── 에어콘 ";
-	cout << " │" << endl;
-	cout << " │" << endl;
-	cout << " └─────────────────── 문 ";
-	cout << "======================================" << endl;
-	cout << "[*] CLI" << endl;
-	cout << "[>] ";
-}
 
 
 // readlog file 
