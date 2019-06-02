@@ -7,6 +7,11 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <windows.h>
+#define font_blue() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_INTENSITY)
+#define font_red() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_INTENSITY)
+#define font_white() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY)
+#define font_green() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_INTENSITY)
 using namespace std;
 
 void read_csv_log(Printer *ptr0, Aircon *ptr1, Door *ptr2);
@@ -15,6 +20,7 @@ void showConsole(Printer *printer1, Aircon *aircon1, Door *door1);
 void menu(Printer *printer1, Aircon *aircon1, Door *door1);
 
 int main() {
+	font_white();
 	Printer printer1;
 	Aircon aircon1;
 	Door door1;
@@ -25,6 +31,8 @@ int main() {
 	printer1.GPIO_CDM = 3; //test용      
 	aircon1.GPIO_CDM = 2; //test용  
 	door1.GPIO_CDM = 7; //test용  
+
+	showConsole(&printer1, &aircon1, &door1);
 
 
 	while (true) {
@@ -46,123 +54,60 @@ void upLinePrompt(int count)
 	}
 }
 
-void showConsole(Printer *printer1, Aircon *aircon1, Door *door1) {
+void showConsole(Printer *_printer1_, Aircon *_aircon1_, Door *_door1_) {
+
 	//showconsole
-	cout << "                               전원   권한  자동모드" << endl;
+	cout << "                                ";font_red();cout<<"전원";font_blue();cout<<"   권한" ;font_green();cout<<"   자동모드  "<< endl;font_red();
 	cout << "┌───────────────────┐" << endl;
 	cout << "│                   │" << endl;
 	cout << "│    중 앙  제 어   │" << endl;
 	cout << "│                   │" << endl;
 	cout << "└───────────────────┘" << endl;
+	if (*((*_printer1_).Register[0]) & 4) font_red();else font_white();
 	cout << " │" << endl;
 	cout << " │" << endl;
-	cout << " └─────────────────── 프린터    ";
+	cout << " └──────────";
+	if (*((*_printer1_).Register[0]) & 2) font_blue();else font_white();
+	cout << "───────── ";
+	font_white();
+	cout << "프린터    ";
+	font_red();
+	((*((*_printer1_).Register[0]) & 4)) ? cout << "■     " : cout << "□     " ;font_blue();
+	((*((*_printer1_).Register[0]) & 2)) ? cout << "■     " : cout << "□     " ;font_green();
+	((*((*_printer1_).Register[0]) & 1)) ? cout << "■"<<endl : cout << "□"<<endl ;
+	if (*((*_aircon1_).Register[0]) & 4) font_red();else font_white();
+	cout << " │" << endl;
+	cout << " │" << endl;
+	cout << " └──────────";
+	if (*((*_aircon1_).Register[0]) & 2) font_blue();else font_white();
+	cout << "───────── ";
+	font_white();
+	cout << "에어컨    ";font_red();
+	((*((*_aircon1_).Register[0]) & 4)) ? cout << "■     " : cout << "□     " ;font_blue();
+	((*((*_aircon1_).Register[0]) & 2)) ? cout << "■     " : cout << "□     " ;font_green();
+	((*((*_aircon1_).Register[0]) & 1)) ? cout << "■"<<endl : cout << "□"<<endl ;
 
-	if ((*(printer1->Register[0]) & 1)) //자동모드 
-	{
-		if ((*(printer1->Register[0]) == 7)) { //전원O 권한 O (0b111)
-			cout << "■     ■     ■" << endl;
-		}
-		else if ((*(printer1->Register[0]) == 5)) { //전원O 권한 x (0b101)
-			cout << "■     □     ■" << endl;
-		}
-		else if ((*(printer1->Register[0]) == 3)) { //전원x 권한 O (0b011)
-			cout << "□     ■     ■" << endl;
-		}
-		else if ((*(printer1->Register[0]) == 1)) { //전원x 권한 x (0b001)
-			cout << "□     □     ■" << endl;
-		}
-	}
-	else if (!(*(printer1->Register[0]) & 1)) //수동모드
-	{
-		if ((*(printer1->Register[0]) == 6)) { //전원O 권한 O (0b110)
-			cout << "■     ■     □" << endl;
-		}
-		else if ((*(printer1->Register[0]) == 4)) { //전원O 권한 x (0b100)
-			cout << "■     □     □" << endl;
-		}
-		else if ((*(printer1->Register[0]) == 2)) { //전원x 권한 O (0b010)
-			cout << "□     ■     □" << endl;
-		}
-		else if ((*(printer1->Register[0]) == 0)) { //전원x 권한 x (0b000)
-			cout << "□     □     □" << endl;
-		}
-	}
+	if (*((*_door1_).Register[0]) & 4) font_red();else font_white();
 	cout << " │" << endl;
 	cout << " │" << endl;
-	cout << " └─────────────────── 에어컨    ";
+	cout << " └──────────";
+	if (*((*_door1_).Register[0]) & 2) font_blue();else font_white();
+	cout << "───────── ";
+	font_white();
+	cout << "출입문    ";
+	font_red();
 
-	if ((*(aircon1->Register[0]) & 1)) //자동모드 
-	{
-		if ((*(aircon1->Register[0]) == 7)) { //전원O 권한 O (0b111)
-			cout << "■     ■     ■" << endl;
-		}
-		else if ((*(aircon1->Register[0]) == 5)) { //전원O 권한 x (0b101)
-			cout << "■     □     ■" << endl;
-		}
-		else if ((*(aircon1->Register[0]) == 3)) { //전원x 권한 O (0b011)
-			cout << "□     ■     ■" << endl;
-		}
-		else if ((*(aircon1->Register[0]) == 1)) { //전원x 권한 x (0b001)
-			cout << "□     □     ■" << endl;
-		}
-	}
-	else if (!(*(aircon1->Register[0]) & 1)) //수동모드
-	{
-		if ((*(aircon1->Register[0]) == 6)) { //전원O 권한 O (0b110)
-			cout << "■     ■     □" << endl;
-		}
-		else if ((*(aircon1->Register[0]) == 4)) { //전원O 권한 x (0b100)
-			cout << "■     □     □" << endl;
-		}
-		else if ((*(aircon1->Register[0]) == 2)) { //전원x 권한 O (0b010)
-			cout << "□     ■     □" << endl;
-		}
-		else if ((*(aircon1->Register[0]) == 0)) { //전원x 권한 x (0b000)
-			cout << "□     □     □" << endl;
-		}
-	}
+	((*((*_door1_).Register[0]) & 4)) ? cout << "■     " : cout << "□     " ;font_blue();
+	((*((*_door1_).Register[0]) & 2)) ? cout << "■     " : cout << "□     " ;font_green();
+	((*((*_door1_).Register[0]) & 1)) ? cout << "■"<<endl : cout << "□"<<endl ;
+	font_white();
 
-	cout << " │" << endl;
-	cout << " │" << endl;
-	cout << " └─────────────────── 문        ";
-
-	if ((*(door1->Register[0]) & 1)) //자동모드 
-	{
-		if ((*(door1->Register[0]) == 7)) { //전원O 권한 O (0b111)
-			cout << "■     ■     ■" << endl;
-		}
-		else if ((*(door1->Register[0]) == 5)) { //전원O 권한 x (0b101)
-			cout << "■     □     ■" << endl;
-		}
-		else if ((*(door1->Register[0]) == 3)) { //전원x 권한 O (0b011)
-			cout << "□     ■     ■" << endl;
-		}
-		else if ((*(door1->Register[0]) == 1)) { //전원x 권한 x (0b001)
-			cout << "□     □     ■" << endl;
-		}
-	}
-	else if (!(*(door1->Register[0]) & 1)) //수동모드
-	{
-		if ((*(door1->Register[0]) == 6)) { //전원O 권한 O (0b110)
-			cout << "■     ■     □" << endl;
-		}
-		else if ((*(door1->Register[0]) == 4)) { //전원O 권한 x (0b100)
-			cout << "■     □     □" << endl;
-		}
-		else if ((*(door1->Register[0]) == 2)) { //전원x 권한 O (0b010)
-			cout << "□     ■     □" << endl;
-		}
-		else if ((*(door1->Register[0]) == 0)) { //전원x 권한 x (0b000)
-			cout << "□     □     □" << endl;
-		}
-	}
-
-	cout << "===================================================" << endl;
+	cout << "======================================" << endl;
 	cout << "[*] CLI" << endl;
 	cout << "[>] ";
+	
+	//showConsole end 
 }
-
 void menu(Printer *printer1, Aircon *aircon1, Door *door1) {
 	int num = 7;
 	string Selectmenu;
