@@ -28,12 +28,6 @@ int main() {
 	cout << "Start Central Control System Program..." << endl;
 	_sleep(1000);
 	read_csv_log(&printer1, &aircon1, &door1);
-	printer1.GPIO_CDM = 3; //test용      
-	aircon1.GPIO_CDM = 2; //test용  
-	door1.GPIO_CDM = 7; //test용  
-
-	showConsole(&printer1, &aircon1, &door1);
-
 
 	while (true) {
 		showConsole(&printer1, &aircon1, &door1);
@@ -43,7 +37,6 @@ int main() {
 	}
 	
 }
-
 // 콘솔 특정부분만 지워버림 (재출력할 필요가 없게됨) 사용하게 되면 필요함 https://blog.dork94.com/31
 void upLinePrompt(int count)
 {
