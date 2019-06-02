@@ -50,7 +50,7 @@ int main() {
 			cout << "■     □     □" << endl;
 		}
 	}
-	else if ((*(printer1.Register[0]) & 0)) //수동모드
+	else if (!(*(printer1.Register[0]) & 1)) //수동모드
 	{
 		if ((*(printer1.Register[0]) == 6)) { //전원O 권한 O
 			cout << "□     ■     ■" << endl;
