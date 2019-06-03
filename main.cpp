@@ -8,10 +8,7 @@
 #include <vector>
 #include <string>
 #include <windows.h>
-#define font_blue() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_INTENSITY)
-#define font_red() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_INTENSITY)
-#define font_white() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY)
-#define font_green() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_INTENSITY)
+
 using namespace std;
 
 void read_csv_log(Printer *ptr0, Aircon *ptr1, Door *ptr2);
@@ -21,7 +18,7 @@ void menu(Printer *printer1, Aircon *aircon1, Door *door1);
 bool fexists(const std::string& filename);
 
 int main() {
-   system("mode con cols=80 lines=30");
+   system("mode con cols=80 lines=55");
    font_white();
    Printer printer1;
    Aircon aircon1;
@@ -40,7 +37,19 @@ int main() {
    read_csv_log(&printer1, &aircon1, &door1);
 
    while (true) {
-      showConsole(&printer1, &aircon1, &door1);
+   showConsole(&printer1, &aircon1, &door1);
+   cout << endl;
+   cout << "========================================================" << endl << endl;
+   cout << "printer status\n"; 
+   printer1.status() ;
+   cout << "aircon status\n";
+   aircon1.status();
+   cout << "door status\n";
+   door1.status() ;
+   cout << "========================================================" << endl << endl;
+   cout << "[*] CLI" << endl;
+   cout << "[>] ";
+
       menu(&printer1, &aircon1, &door1);
       _sleep(4000);
       system("cls");
@@ -106,10 +115,7 @@ void showConsole(Printer *_printer1_, Aircon *_aircon1_, Door *_door1_) {
    ((*((*_door1_).Register[0]) & 1)) ? cout << "■"<<endl : cout << "□"<<endl ;
    font_white();
 
-   cout << "======================================" << endl;
-   cout << "[*] CLI" << endl;
-   cout << "[>] ";
-   
+  
    //showConsole end 
 }
 void menu(Printer *printer1, Aircon *aircon1, Door *door1) {
@@ -119,7 +125,7 @@ void menu(Printer *printer1, Aircon *aircon1, Door *door1) {
    cin >> Selectmenu;
    cout << " " << endl;
    if (!Selectmenu.compare("프린터")) {
-      cout << "1.전원 켜기/끄기\t\t2.잉크/종이 넣기 요청\t\t3.잉크 종이 잔량 확인" << endl;
+      cout << "1.전원 켜기/끄기\t\t2.잉크/종이 넣기 요청\t\t" << endl;
       cout << "[>] ";
       cin.ignore(); //cin의 버퍼를 비움
       cin >> Selectnum;
@@ -162,19 +168,16 @@ void menu(Printer *printer1, Aircon *aircon1, Door *door1) {
       else if (Selectnum == 2) {
          printer1->autoCtl();
       }
-      else if (Selectnum == 3) {
-         printer1->status();
-      }
       //void upLinePrompt(int count)
    }
    else if (!Selectmenu.compare("에어컨")) {
-      cout << "1.전원 켜기/끄기\t\t2.희망온도 설정\t\t3.현재 가동상태 확인" << endl;
+      cout << "1.전원 켜기/끄기\t\t2.희망온도 설정\t\t" << endl;
       cout << "[>] ";
       cin.ignore(); //cin의 버퍼를 비움
       cin >> Selectnum;
       cout << " " << endl;
       if (Selectnum == 1) {
-         if (*(aircon1->Register[0]) == 1)
+         if (*(aircon1->Register[0]) & 4)
          {
             cout << "에어컨을 끄는중.";
             for (int i = 0; i < 2; i++) {
@@ -211,22 +214,51 @@ void menu(Printer *printer1, Aircon *aircon1, Door *door1) {
       else if (Selectnum == 2) {
          aircon1->autoCtl();
       }
-      else if (Selectnum == 3) {
-         aircon1->status();
-      }
       //void upLinePrompt(int count)
    }
    else if (!Selectmenu.compare("출입문")) {
-      cout << "1.개문/폐문 설정하기\t\t2.현재 개폐여부 확인" << endl;
+      cout << "1.출입문 관리장치 전원 켜기/끄기\t\t2.개문/폐문 설정하기\t\t" << endl;
       cout << "[>] ";
       cin.ignore(); //cin의 버퍼를 비움
       cin >> Selectnum;
       cout << " " << endl;
-      if (Selectnum == 1) {
+
+		if (Selectnum == 1) {
+		   if (*(door1->Register[0]) & 4)
+		   {
+		      cout << "출입문을 잠그는중.";
+		      for (int i = 0; i < 2; i++) {
+		         for (int j = 0; j < 5; j++) {
+		            cout << ".";
+		            _sleep(500);
+		         }
+		         cout << "\b\b\b\b\b";
+		         cout << "     ";
+		         cout << "\b\b\b\b\b";
+		      }
+		      cout << endl;
+		      *(door1->Register[0]) ^= 0x1 << 2; //3번째 비트(전원비트)만 반전
+		      cout << "출입문이 잠겼습니다." << endl;
+
+		   }
+		   else {
+		      cout << "출입문을 여는중";
+		      for (int i = 0; i < 2; i++) {
+		         //cout << "\b\b\b\b\b";
+		         for (int j = 0; j < 5; j++) {
+		            cout << ".";
+		            _sleep(500);
+		         }
+		         cout << "\b\b\b\b\b";
+		         cout << "     ";
+		         cout << "\b\b\b\b\b";
+		      }
+		      cout << endl;
+		      *(door1->Register[0]) ^= 0x1 << 2; //3번째 비트(전원비트)만 반전
+		      cout << "출입문이 열렸습니다." << endl;
+		   }
+		}else if (Selectnum == 2) {
          door1->autoCtl();
-      }
-      else if (Selectnum == 2) {
-         door1->status();
       }
       //void upLinePrompt(int count)
    }
