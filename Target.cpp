@@ -42,7 +42,7 @@ public:
    virtual void autoCtl() {
       if (!(*Register[0] & 4))
       {
-         cout << "전원이 안들어와 있습니다."; return;
+         cout << "전원이 들어와있지 있습니다."; return;
       }
       if (!(*Register[0] & 2))
       {
@@ -79,7 +79,7 @@ public:
    virtual void autoCtl() {
       if (!(*Register[0] & 4))
       {
-         cout << "전원이 안들어와 있습니다."; return;
+         cout << "전원이 들어와있지 있습니다."; return;
       }
       if (!(*Register[0] & 2))
       {
@@ -141,7 +141,7 @@ public:
    virtual void autoCtl() {
       if (!(*Register[0] & 4))
       {
-         cout << "전원이 안들어와 있습니다."; return;
+         cout << "전원이 들어와있지 있습니다."; return;
       }
       if (!(*Register[0] & 2))
       {
