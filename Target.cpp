@@ -1,6 +1,13 @@
 #include <iostream>
 #include <bitset>
 #include <ctime>
+#include <windows.h>
+#define font_blue() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_INTENSITY)
+#define font_red() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_INTENSITY)
+#define font_white() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY)
+#define font_green() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_INTENSITY)
+#define font_yellow() SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY)
+
 using namespace std;
 int getMonth();
 int getHour();
@@ -33,7 +40,7 @@ public:
          cout <<"프린터의 전원이 꺼져있어 상태를 출력할 수 없습니다.\n\n";
          return 0;
       }
-      cout << "clock, digital_enable, mode : 0b" << bitset<3>(*Register[0]) << endl;
+      cout << "clock, digital_enable, mode : ";font_yellow();cout << "0b" << bitset<3>(*Register[0]) << endl;font_white();
       cout << "잉크 : " << *Register[1] << "%" << endl;
       cout << "종이 : " << *Register[2] << "%" << endl;
       time_t last_to_time = *Register[3];
@@ -70,7 +77,7 @@ public:
          cout <<"에어컨의 전원이 꺼져있어 상태를 출력할 수 없습니다.\n\n";
          return 0;
       }
-      cout << "clock, digital_enable, mode : 0b" << bitset<3>(*Register[0]) << endl;
+      cout << "clock, digital_enable, mode : ";font_yellow();cout << "0b" << bitset<3>(*Register[0]) << endl;font_white();
       cout << "온도 : " << *Register[1] << "＇" << endl;
       cout << "운전방식(0:송풍 1:냉방 2:난방) : " << *Register[2] << endl;
       time_t last_to_time = *Register[3];
@@ -98,7 +105,7 @@ public:
          *Register[2] = 2;
          cout << "난방기능을 사용하도록 설정했습니다." << endl;
       }
-      if (*Register[2] == 2 && (getMonth() == 11 || getMonth() == 7 || getMonth() == 8 || getMonth() == 9 || getMonth() == 10)) {
+      if (*Register[2] == 2 && (getMonth() == 11 || getMonth() == 6 || getMonth() == 7 || getMonth() == 8 || getMonth() == 9 || getMonth() == 10)) {
          cout << "여름에는 난방기능을 사용할 수 없습니다." << endl;
          *Register[2] = 1;
          cout << "냉방기능을 사용하도록 설정했습니다." << endl;
@@ -132,9 +139,12 @@ public:
          *Register[2] = 0;
       }
       GPIO_CDM |= 1; //GPIO_CDM 에서 M비트(자동화 모드)를 강제로 1로 만든다.
-      cout << "clock, digital_enable, mode : 0b" << bitset<3>(*Register[0]) << endl;
+      cout << "clock, digital_enable, mode : ";font_yellow();cout << "0b" << bitset<3>(*Register[0]) << endl;font_white();
       cout << "개폐여부(0:닫힘 1:열림) : " << *Register[1] << endl;
-      cout << "기능이상(0:이상무 1:이상) : " << *Register[2] << endl;
+      cout << "기능이상(0:이상무 1:이상) : ";
+      if (*Register[2]) font_red();
+      cout << *Register[2] << endl;
+      font_white();
       time_t last_to_time = *Register[3];
       cout << "마지막 변경시간 : " << ctime(&last_to_time) << endl << endl;
    }
