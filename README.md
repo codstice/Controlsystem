@@ -15,6 +15,7 @@ The purpose of file input and output is to restore the file upon reboot after sh
 The actual embedded program receives and processes values through the register. 
 The Control System manages embedded devices with four registers each. Printed, air-conditioned, door-to-door.
 The roles of each register are as follows table:
+
 ![image](https://user-images.githubusercontent.com/43433753/59100579-75a39a80-8961-11e9-84c2-8a9f990e1873.png)
 
 GPIO_CDM : store elements that are Power, Authority, Usage-Mode State. This register is set as follows table:
