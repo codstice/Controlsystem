@@ -19,6 +19,7 @@ The roles of each register are as follows table:
 ![image](https://user-images.githubusercontent.com/43433753/59100579-75a39a80-8961-11e9-84c2-8a9f990e1873.png)
 
 GPIO_CDM : store elements that are Power, Authority, Usage-Mode State. This register is set as follows table:
+
 ![image](https://user-images.githubusercontent.com/43433753/59100780-0da18400-8962-11e9-8a10-f40b70e7b42f.png)
 
 # Screen
