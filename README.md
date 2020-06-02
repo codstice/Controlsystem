@@ -1,6 +1,6 @@
 # made by
 This team project made by enviroment on only C++ in windows.
-Team member is consist of Sooncheonhyang Univ 3students in Korea. Our github are hungry-shark, codstice, debukuk.
+Team member is consist of Sooncheonhyang Univ 3students in Korea. Our github are AlexJime, codstice, debukuk.
 
 # Controlsystem
 This program is a dormitory central control system simulator that implements dormitory control facilities with object-oriented programming language C++ based on its motif. 
