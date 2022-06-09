@@ -1,3 +1,5 @@
+### _Document Written by [Alexjime](https://github.com/alexjime)_
+
 # made by
 This team project made by enviroment on only C++ in windows.
 Team member is consist of Sooncheonhyang Univ 3students in Korea. Our github are AlexJime, codstice, debukuk.
